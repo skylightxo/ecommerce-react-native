@@ -1,13 +1,21 @@
 import React from 'react';
-import {SafeAreaView} from 'react-native';
-import {Square} from './components/index';
+import {useColorScheme, ViewStyle} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-function App(): JSX.Element {
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {MainScreen} from './screens/MainScreen';
+
+const App = () => {
+  const isDarkMode = useColorScheme() === 'dark';
+
+  const backgroundStyle: ViewStyle = {
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  };
+
   return (
-    <SafeAreaView>
-      <Square />
-    </SafeAreaView>
+    <SafeAreaProvider style={backgroundStyle}>
+      <MainScreen />
+    </SafeAreaProvider>
   );
-}
-
+};
 export default App;
