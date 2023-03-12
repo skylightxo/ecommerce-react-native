@@ -1,7 +1,7 @@
-import {colors} from '../../assets/colors';
+import {COLORS} from '../../constants/colors';
 import {StyleSheet} from 'react-native';
 
-const {BLACK, NEUTRAL_GRAY} = colors;
+const {BLACK, NEUTRAL_GRAY} = COLORS;
 
 export const styles = StyleSheet.create({
   input: {

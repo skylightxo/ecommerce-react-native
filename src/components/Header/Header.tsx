@@ -1,16 +1,18 @@
-import React, {FC, useMemo} from 'react';
+import React from 'react';
 import {GestureResponderEvent} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {
   Header as HeaderRNE,
   HeaderProps as HeaderRNEProps,
-  Text,
 } from '@rneui/themed';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from './Header.styles';
-import {colors} from '../../assets/colors';
+import {COLORS} from '../../constants/colors';
 
-const {BLUE, WHITE} = colors;
+const {BLUE} = COLORS;
+
+type HeaderComponents = {
+  Button: React.FC<HeaderButtonProps>;
+};
 
 type HeaderButtonProps = {
   onPress?: ((event: GestureResponderEvent) => void) & (() => void);
@@ -19,46 +21,29 @@ type HeaderButtonProps = {
 
 type HeaderProps = {
   title?: string;
+  leftComponent?: JSX.Element;
+  centerComponent?: JSX.Element;
+  rightComponent?: JSX.Element;
 };
 
-export const HeaderButton: FC<HeaderButtonProps> = ({onPress, icon}) => {
+const HeaderButton: React.FC<HeaderButtonProps> = ({onPress, icon}) => {
   return <TouchableOpacity onPress={onPress}>{icon}</TouchableOpacity>;
 };
 
-export const Header: FC<HeaderRNEProps & HeaderProps> = props => {
-  const {leftComponent, centerComponent, rightComponent, title} = props;
-
-  const left = useMemo(
-    () =>
-      leftComponent || (
-        <HeaderButton icon={<Icon name="menu" color={WHITE} size={25} />} />
-      ),
-    [leftComponent],
-  );
-
-  const center = useMemo(
-    () => centerComponent || <Text style={styles.headerCenter}>{title}</Text>,
-    [title, centerComponent],
-  );
-
-  const right = useMemo(
-    () =>
-      rightComponent || (
-        <HeaderButton
-          icon={<Icon name="shopping-cart" color={WHITE} size={25} />}
-        />
-      ),
-    [rightComponent],
-  );
+export const Header: React.FC<HeaderRNEProps & HeaderProps> &
+  HeaderComponents = props => {
+  const {leftComponent, centerComponent, rightComponent} = props;
 
   return (
     <HeaderRNE
       {...props}
       backgroundColor={BLUE}
       containerStyle={styles.headerContainer}
-      leftComponent={left}
-      centerComponent={center}
-      rightComponent={right}
+      leftComponent={leftComponent}
+      centerComponent={centerComponent}
+      rightComponent={rightComponent}
     />
   );
 };
+
+Header.Button = HeaderButton;

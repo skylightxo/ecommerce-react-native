@@ -1,7 +1,7 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback} from 'react';
 import {FlatList, ListRenderItem, RefreshControl} from 'react-native';
 import {ProductCard} from '../ProductCard';
-import {ProductsService} from '../../services/Products.service';
+import {useProducts} from '../../hooks/useProducts';
 
 import {styles} from './ProductsList.styles';
 
@@ -9,14 +9,7 @@ import type {Product} from '../../types/product.type';
 import {Text} from '@rneui/base';
 
 export const ProductsList = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const fetchProducts = useCallback(async () => {
-    ProductsService.getProducts()
-      .then(({data}) => setProducts(data))
-      .finally(() => setIsLoading(false));
-  }, []);
+  const {products, isLoading, fetchProducts} = useProducts();
 
   const renderItem: ListRenderItem<Product> = useCallback(
     ({item}) => <ProductCard product={item} />,
@@ -30,10 +23,6 @@ export const ProductsList = () => {
 
   const numCols = 2;
   const columnWrapperStyle = styles.row;
-
-  useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
 
   return products.length ? (
     <FlatList
