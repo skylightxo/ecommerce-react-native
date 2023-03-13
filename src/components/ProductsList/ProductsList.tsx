@@ -8,7 +8,7 @@ import {styles} from './ProductsList.styles';
 import type {Product} from '../../types/product.type';
 import {Text} from '@rneui/base';
 
-export const ProductsList = () => {
+export const ProductsList = React.memo(() => {
   const {products, isLoading, fetchProducts} = useProducts();
 
   const renderItem: ListRenderItem<Product> = useCallback(
@@ -40,4 +40,4 @@ export const ProductsList = () => {
   ) : (
     <Text>Loading</Text>
   );
-};
+});

@@ -8,7 +8,7 @@ type PaginationProps = {
   activeIndex: number;
 };
 
-export const Dots: React.FC<PaginationProps> = ({itemsCount, activeIndex}) => {
+export const Dots = React.memo(({itemsCount, activeIndex}: PaginationProps) => {
   const dots = useMemo(() => {
     const result = Array.from({length: itemsCount}, (_, i) => {
       const activeStyle = activeIndex === i ? styles.activeDot : null;
@@ -19,6 +19,6 @@ export const Dots: React.FC<PaginationProps> = ({itemsCount, activeIndex}) => {
   }, [activeIndex, itemsCount]);
 
   return <View style={styles.root}>{dots}</View>;
-};
+});
 
 Dots.displayName = 'Dots';

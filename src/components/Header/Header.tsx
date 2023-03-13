@@ -1,6 +1,5 @@
 import React from 'react';
-import {GestureResponderEvent} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {GestureResponderEvent, Pressable} from 'react-native';
 import {
   Header as HeaderRNE,
   HeaderProps as HeaderRNEProps,
@@ -26,14 +25,20 @@ type HeaderProps = {
   rightComponent?: JSX.Element;
 };
 
-const HeaderButton: React.FC<HeaderButtonProps> = ({onPress, icon}) => {
-  return <TouchableOpacity onPress={onPress}>{icon}</TouchableOpacity>;
-};
+const HeaderButton = React.memo(({onPress, icon}: HeaderButtonProps) => {
+  return (
+    <Pressable hitSlop={10} onPress={onPress}>
+      {icon}
+    </Pressable>
+  );
+});
 
-export const Header: React.FC<HeaderRNEProps & HeaderProps> &
-  HeaderComponents = props => {
-  const {leftComponent, centerComponent, rightComponent} = props;
-
+export const Header: React.FC<HeaderRNEProps & HeaderProps> & HeaderComponents = ({
+  leftComponent,
+  centerComponent,
+  rightComponent,
+  ...props
+}) => {
   return (
     <HeaderRNE
       {...props}

@@ -1,7 +1,6 @@
 import React, {useCallback, useRef, useState} from 'react';
 import {Dimensions, View, ViewStyle} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {SharedValue} from 'react-native-reanimated';
 import Carousel, {ICarouselInstance} from 'react-native-reanimated-carousel';
 
 import {Button, Dots} from './components';
@@ -23,7 +22,7 @@ type ProductCarouselProps = {
   withControls?: boolean;
 };
 
-export const ProductCarousel: React.FC<ProductCarouselProps> &
+const ProductCarouselComponent: React.FC<ProductCarouselProps> &
   CarouselComponents = ({
   slideStyle,
   children,
@@ -33,19 +32,17 @@ export const ProductCarousel: React.FC<ProductCarouselProps> &
   containerStyle,
   withControls = true,
 }) => {
-  console.log(children);
   const [currentIndex, setCurrentIndex] = useState(0);
   const screenWidth = Dimensions.get('window').width;
 
   const ref = useRef<ICarouselInstance>(null);
 
-  const renderItem: (info: {
-    item: JSX.Element;
-    index: number;
-    animationValue: SharedValue<number>;
-  }) => React.ReactElement = ({item}) => {
-    return <View style={[styles.slide, slideStyle]}>{item}</View>;
-  };
+  const renderItem = useCallback(
+    ({item}: {item: JSX.Element}) => {
+      return <View style={[styles.slide, slideStyle]}>{item}</View>;
+    },
+    [slideStyle],
+  );
 
   const onSnapToItem = useCallback((index: number) => {
     setCurrentIndex(index);
@@ -73,7 +70,7 @@ export const ProductCarousel: React.FC<ProductCarouselProps> &
         />
       </GestureHandlerRootView>
       {pagination && (
-        <ProductCarousel.Dots
+        <ProductCarouselComponent.Dots
           activeIndex={currentIndex}
           itemsCount={children.length}
         />
@@ -81,10 +78,16 @@ export const ProductCarousel: React.FC<ProductCarouselProps> &
       {withControls && (
         <>
           <View style={styles.nextButton}>
-            <ProductCarousel.Button onPress={onNextPress} type="next" />
+            <ProductCarouselComponent.Button
+              onPress={onNextPress}
+              type="next"
+            />
           </View>
           <View style={styles.prevButton}>
-            <ProductCarousel.Button onPress={onPrevPress} type="prev" />
+            <ProductCarouselComponent.Button
+              onPress={onPrevPress}
+              type="prev"
+            />
           </View>
         </>
       )}
@@ -92,5 +95,7 @@ export const ProductCarousel: React.FC<ProductCarouselProps> &
   );
 };
 
-ProductCarousel.Dots = Dots;
-ProductCarousel.Button = Button;
+ProductCarouselComponent.Dots = Dots;
+ProductCarouselComponent.Button = Button;
+
+export const ProductCarousel = React.memo(ProductCarouselComponent);

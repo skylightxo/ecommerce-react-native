@@ -13,7 +13,7 @@ const comparePrices = (newPrice: string, oldPrice: string) => {
   return Math.round(100 - (Number(newPrice) / Number(oldPrice)) * 100);
 };
 
-export const ProductPrice = ({price}: ProductPriceProps) => {
+export const ProductPrice = React.memo(({price}: ProductPriceProps) => {
   const productFormattedPrice = Number(price).toFixed(0);
   const productOldPrice = generateProductOldPrice(
     Number(productFormattedPrice),
@@ -41,4 +41,4 @@ export const ProductPrice = ({price}: ProductPriceProps) => {
       {comparePriceText}
     </View>
   );
-};
+});

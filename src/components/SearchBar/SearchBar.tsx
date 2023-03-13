@@ -6,7 +6,7 @@ import {COLORS} from '../../constants/colors';
 
 const {NEUTRAL_GRAY} = COLORS;
 
-export const SearchBar = () => {
+export const SearchBar = React.memo(() => {
   return (
     <Input
       inputContainerStyle={styles.inputContainer}
@@ -17,4 +17,4 @@ export const SearchBar = () => {
       leftIcon={<Icon name="search" color={NEUTRAL_GRAY} size={25} />}
     />
   );
-};
+});

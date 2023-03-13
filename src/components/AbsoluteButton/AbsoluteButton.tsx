@@ -8,15 +8,17 @@ type AbsoluteButtonProps = {
   onPress: () => void;
 };
 
-export const AbsoluteButton = ({title, onPress}: AbsoluteButtonProps) => {
-  return (
-    <View style={styles.container}>
-      <Button
-        style={[styles.shadowProps, styles.root]}
-        title={title}
-        onPress={onPress}
-        titleStyle={styles.text}
-      />
-    </View>
-  );
-};
+export const AbsoluteButton = React.memo(
+  ({title, onPress}: AbsoluteButtonProps) => {
+    return (
+      <View style={styles.container}>
+        <Button
+          style={[styles.shadowProps, styles.root]}
+          title={title}
+          onPress={onPress}
+          titleStyle={styles.text}
+        />
+      </View>
+    );
+  },
+);

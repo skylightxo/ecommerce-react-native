@@ -44,6 +44,15 @@ export const ProductDetailsScreen = () => {
     [],
   );
 
+  const headerLeftComponent = useMemo(
+    () => (
+      <Header.Button
+        icon={<Icon name="arrow-back" color={COLORS.WHITE} size={25} />}
+      />
+    ),
+    [],
+  );
+
   useEffect(() => {
     if (!product) {
       return;
@@ -51,7 +60,7 @@ export const ProductDetailsScreen = () => {
 
     const imagesData = product.relationships.images.data ?? [];
 
-    if (imagesData.length === 0) {
+    if (!imagesData.length) {
       return;
     }
 
@@ -129,11 +138,7 @@ export const ProductDetailsScreen = () => {
   ) : (
     <View style={styles.root}>
       <Header
-        leftComponent={
-          <Header.Button
-            icon={<Icon name="arrow-back" color={COLORS.WHITE} size={25} />}
-          />
-        }
+        leftComponent={headerLeftComponent}
         rightComponent={headerRightComponent}
       />
       <SafeAreaView
