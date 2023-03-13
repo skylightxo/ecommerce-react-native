@@ -17,13 +17,8 @@ type CarouselButtonProps = {
 
 export const Button = React.memo(
   ({type = 'next', onPress, containerStyle}: CarouselButtonProps) => {
-    const icon = useMemo(
-      () =>
-        type === 'next' ? (
-          <Icon name="arrow-forward-ios" />
-        ) : (
-          <Icon name="arrow-back-ios" />
-        ),
+    const iconName = useMemo(
+      () => (type === 'next' ? 'arrow-forward-ios' : 'arrow-back-ios'),
       [type],
     );
 
@@ -31,7 +26,9 @@ export const Button = React.memo(
       <TouchableOpacity
         style={[styles.container, containerStyle]}
         onPress={onPress}>
-        <View style={styles.root}>{icon}</View>
+        <View style={styles.root}>
+          <Icon name={iconName} />
+        </View>
       </TouchableOpacity>
     );
   },
