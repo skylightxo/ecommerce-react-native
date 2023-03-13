@@ -81,12 +81,14 @@ const ProductCarouselComponent: React.FC<ProductCarouselProps> &
             <ProductCarouselComponent.Button
               onPress={onNextPress}
               type="next"
+              disabled={currentIndex === children.length - 1}
             />
           </View>
           <View style={styles.prevButton}>
             <ProductCarouselComponent.Button
               onPress={onPrevPress}
               type="prev"
+              disabled={currentIndex === 0}
             />
           </View>
         </>
