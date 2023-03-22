@@ -1,13 +1,15 @@
 import React from 'react';
-import {SafeAreaView} from 'react-native';
-import {Square} from './components/index';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-function App(): JSX.Element {
+// import {MainScreen} from './screens/MainScreen';
+import {ProductDetailsScreen} from './screens/ProductDetailsScreen';
+
+const App = () => {
   return (
-    <SafeAreaView>
-      <Square />
-    </SafeAreaView>
+    <SafeAreaProvider>
+      {/* <MainScreen /> */}
+      <ProductDetailsScreen />
+    </SafeAreaProvider>
   );
-}
-
+};
 export default App;
